@@ -1,0 +1,32 @@
+[gd_scene load_steps=7 format=3 uid="uid://cscq7k7rcc3co"]
+
+[ext_resource type="Script" uid="uid://dd0alv3h8xtfe" path="res://scripts/tex_gen.gd" id="1_df12a"]
+[ext_resource type="Shader" uid="uid://2afo71axfdxl" path="res://shaders/shader.gdshader" id="2_fqkwo"]
+[ext_resource type="Script" uid="uid://dwars4rvttwru" path="res://scripts/clickable.gd" id="3_dmb1f"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_dmb1f"]
+shader = ExtResource("2_fqkwo")
+shader_parameter/octaves = 2
+shader_parameter/amplitude = 0.0
+shader_parameter/frequency = 0.0
+shader_parameter/warp_factor = 0.0
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_dmb1f"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_nufme"]
+
+[node name="TexObj" type="Node2D"]
+scale = Vector2(10, 10)
+script = ExtResource("1_df12a")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+material = SubResource("ShaderMaterial_dmb1f")
+scale = Vector2(20, 20)
+texture = SubResource("CanvasTexture_dmb1f")
+
+[node name="Area2D" type="Area2D" parent="."]
+script = ExtResource("3_dmb1f")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(3.69549e-07, -3.8147e-07)
+shape = SubResource("RectangleShape2D_nufme")

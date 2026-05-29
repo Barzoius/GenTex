@@ -6,17 +6,6 @@ vec2 random(vec2 uv){
     return -1.0 + 2.0 * fract(sin(uv) * 43758.5453123);
 }
 
-//vec2 random(vec2 uv) {
-	//return vec2(fract(sin(dot(uv.xy,
-		//vec2(12.9898,78.233))) * 43758.5453123));
-//}
-
-float frandom(vec2 uv) {
-    return fract(sin(dot(uv.xy,
-        vec2(12.9898,78.233))) *
-            43758.5453123);
-}
-
 float noise(vec2 uv) {
     vec2 uv_index = floor(uv);
     vec2 uv_fract = fract(uv);
@@ -35,26 +24,6 @@ uniform float frequency;
 
 uniform float warp_factor;
 
-float worley(vec2 uv, float columns, float rows) {
-
-	vec2 index_uv = floor(vec2(uv.x * columns, uv.y * rows));
-	vec2 fract_uv = fract(vec2(uv.x * columns, uv.y * rows));
-
-	float minimum_dist = 1.0;
-
-	for (int y= -1; y <= 1; y++) {
-		for (int x= -1; x <= 1; x++) {
-			vec2 neighbor = vec2(float(x),float(y));
-			vec2 point = random(index_uv + neighbor);
-
-			vec2 diff = neighbor + point - fract_uv;
-			float dist = length(diff);
-			minimum_dist = min(minimum_dist, dist);
-		}
-	}
-
-	return minimum_dist;
-}
 
 float fbm(vec2 uv) {
     float amp = amplitude;
@@ -78,19 +47,14 @@ void vertex() {
 }
 
 void fragment() {
-	//float n = worley(UV * 2.0, 3.0, 5.0);
+	vec2 uv = UV;
 	vec2 warp = vec2(
-    fbm(UV * warp_factor),
-    fbm(UV * warp_factor + vec2(5.2))
+    fbm(uv * warp_factor),
+    fbm(uv * warp_factor + vec2(5.2))
 	);
-	float f = fbm(UV + 0.5 * warp);
-	//float f = fbm(UV);
-	//float combined = mix(f, n, 0.2);
+	float f = fbm(uv + 0.5 * warp);
+
 	COLOR = vec4(vec3(f), 1.0);
-	//COLOR = vec4(vec3(f), 1);
+
 }
 
-//void light() {
-//	// Called for every pixel for every light affecting the CanvasItem.
-//	// Uncomment to replace the default light processing function with this one.
-//}

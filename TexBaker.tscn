@@ -1,0 +1,28 @@
+[gd_scene load_steps=4 format=3 uid="uid://svpja8tj8au7"]
+
+[ext_resource type="Shader" uid="uid://2afo71axfdxl" path="res://shaders/shader.gdshader" id="2_bfixs"]
+
+[sub_resource type="GDScript" id="GDScript_8pfy3"]
+script/source = "extends SubViewport
+
+@onready var sprite = $Sprite2D
+
+func bake(genome) -> Image:
+	var img = get_viewport().get_texture().get_image()
+	return img
+"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_cgfgv"]
+shader = ExtResource("2_bfixs")
+shader_parameter/octaves = 0
+shader_parameter/amplitude = 0.0
+shader_parameter/frequency = 0.0
+shader_parameter/warp_factor = 0.0
+
+[node name="Node2D" type="SubViewport"]
+size = Vector2i(256, 256)
+size_2d_override_stretch = true
+script = SubResource("GDScript_8pfy3")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+material = SubResource("ShaderMaterial_cgfgv")

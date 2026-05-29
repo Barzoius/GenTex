@@ -11,6 +11,8 @@ var warp_factor: float;
 var parent1 = null
 var parent2 = null
 
+var fitness = 0
+
 func _init(o: int, a: float, f: float, w: float):
 	octaves = o
 	amplitude = a
